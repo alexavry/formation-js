@@ -1,13 +1,11 @@
 document.getElementById("btnAjouter").onclick = () => {
     const myTbody = document.getElementById('myTbody');
-
     const fruit = document.getElementById('fruit').value;
     document.getElementById('fruit').value='';
-    
-    const tr = document.createElement('tr');
-    const td1 = document.createElement('td');
-    td1.innerHTML=fruit;
-    tr.append(td1);
+    const uno = document.createElement('tr');
+    const dos = document.createElement('td');
+    dos.innerHTML=fruit;
+    uno.append(dos);
 
     const td2 = document.createElement('td');
     const button = document.createElement('button');
