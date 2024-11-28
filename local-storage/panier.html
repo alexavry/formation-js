@@ -19,10 +19,10 @@
     />
     <link rel=icon
     href=https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6/svgs/solid/lemon.svg>
-
     <title>Liste de fruits</title>
   </head>
   <body>
+    <!-- Responsive navbar-->
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
       <div class="container px-5">
         <a class="navbar-brand" href="#!">
@@ -31,7 +31,9 @@
       </div>
     </nav>
     <div class="container p-5">
+      <!-- col-4 : je prends 4 colonnes sur 12 -->
       <div class="col-4">
+        <!-- definir une ligne avec bootstrap row -->
         <div class="row">
           <div class="col-10">
             <input
@@ -47,6 +49,7 @@
             </button>
           </div>
         </div>
+        <!-- table.table>tr>thead>th*2 -->
         <table class="table table-striped mt-4">
           <thead>
             <tr>
@@ -54,16 +57,26 @@
               <th>Action</th>
             </tr>
           </thead>
+          <!-- tbody>tr>td*2 -->
           <tbody id="myTbody"></tbody>
         </table>
       </div>
     </div>
     <footer class="py-5 bg-dark">
       <div class="container px-4 px-lg-5">
-        <p class="m-0 text-center text-white">Copyright &copy;Alex 2024</p>
+        <p class="m-0 text-center text-white">Copyright &copy;IMC 2023</p>
       </div>
     </footer>
-    
+    <template id="templateTr">
+      <tr>
+        <td></td>
+        <td>
+          <button class="btn btn-danger">
+            <i class="fa fa-trash"></i>
+          </button>
+        </td>
+      </tr>
+    </template>
     <script src="panier.js" defer></script>
   </body>
 </html>

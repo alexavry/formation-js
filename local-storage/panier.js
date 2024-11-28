@@ -1,23 +1,36 @@
-document.getElementById("btnAjouter").onclick = () => {
-    const myTbody = document.getElementById('myTbody');
-    const fruit = document.getElementById('fruit').value;
-    document.getElementById('fruit').value='';
-    
-    const tr = document.createElement('tr');
-    const td1 = document.createElement('td');
-    td1.innerHTML=fruit;
-    tr.append(td1);
-
-    const td2 = document.createElement('td');
-    const button = document.createElement('button');
-    button.classList.add('btn','btn-danger');
-    const i = document.createElement('i');
-    i.classList.add('fa','fa-trash');
-    button.appendChild(i);
-    button.onclick=(event)=>{
-        event.target.closest('tr').remove();
+let fruits = []
+const sauvegarde = () =>{
+    localStorage.setItem('fruits', JSON.stringify(fruits))
+}
+const afficher = () =>{
+    const tableau = document.getElementById("myTbody")
+    tableau.innerHTML = ''
+    for (let fruit of fruits){
+        const template = document.getElementById('templateTr')
+        const nouveau = template.content.cloneNode(true);
+        let td = nouveau.querySelector("td");
+        td.innerHTML = fruit;
+        let supr = nouveau.querySelector("button")
+        supr.onclick = (event) => {
+            if (confirm("Voulez vous supprimer : " + fruit + " ?")) {
+             const indice =  event.target.closest("tr").rowIndex -1
+             fruits.splice(indice,1)
+             sauvegarde()
+             afficher()
+            }
+        };
+        tableau.appendChild(nouveau);
     }
-    td2.appendChild(button);
-    tr.appendChild(td2);
-    myTbody.appendChild(tr);
+}
+document.getElementById("btnAjouter").onclick = () => {
+    let fruit = document.getElementById("fruit").value;
+    document.getElementById("fruit").value = "";
+    fruits.push(fruit);
+    sauvegarde();
+    afficher();
   };
+const data = localStorage.getItem('fruits');
+if (data){
+  fruits= JSON.parse(data);
+  afficher();
+}
