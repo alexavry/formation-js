@@ -3,16 +3,14 @@ let tab2 = [...tab1, ...tab1];
 console.log(tab1);
 console.log(tab2);
 
+let startTime = null;
+
 function melanger(tab) {
-  let tab2 = [];
-  for (let i = 0; i < tab.length; i++) {
-    let x;
-    do {
-      x = Math.floor(Math.random() * tab.length);
-    } while (tab2[x] != undefined);
-    tab2[x] = tab[i];
+  for (let i = tab.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [tab[i], tab[j]] = [tab[j], tab[i]]; 
   }
-  return tab2;
+  return tab;
 }
 tab2 = melanger(tab2);
 
@@ -47,6 +45,9 @@ divs.forEach(tuile => {
     if (!tuile.classList.contains('green') && selection < 2) {
       tuile.classList.add('green');
       selection++;
+      if (startTime === null) {
+        startTime = new Date();
+      }
 
       if (selection === 1) {
         nom1 = tuile.querySelector('img').src;
@@ -54,15 +55,23 @@ divs.forEach(tuile => {
       } else if (selection === 2) {
         nom2 = tuile.querySelector('img').src;
         tuile2 = tuile;
+
         if (nom1 === nom2) {
-          tuile1.querySelector('img').remove();
-          tuile2.querySelector('img').remove();
-          tuile1.classList.remove('green');
-          tuile2.classList.remove('green');
-          tuile1.onclick = null;
-          tuile2.onclick = null;
-          resetSelection();
-          score = score + 1
+          setTimeout(() => {
+            tuile1.querySelector('img').remove();
+            tuile2.querySelector('img').remove();
+            tuile1.classList.remove('green');
+            tuile2.classList.remove('green');
+            tuile1.onclick = null;
+            tuile2.onclick = null;
+            resetSelection();
+            score++;
+            if (score === 12) { 
+              const endTime = new Date();
+              document.getElementById('fin').classList.remove('none');
+              alert(`Bravo, tu as fini en ${(endTime - startTime) / 1000} secondes !`);
+            }
+          }, 500);
         } else {
           setTimeout(() => {
             tuile1.classList.remove('green');
@@ -77,8 +86,4 @@ divs.forEach(tuile => {
       if (selection === 0) resetSelection();
     }
   };
-  if (score === 11){
-    document.getElementById('fin').classList.remove('none')
-
-  }
 });
